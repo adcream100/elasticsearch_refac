@@ -5,6 +5,8 @@ from core.infrastructure.database.database import Database
 
 from core.infrastructure.redis.client import RedisClient
 
+async def provide_redis_client():
+    return await RedisClient.get_instance()
 
 
 class CoreContainer(containers.DeclarativeContainer):
@@ -12,11 +14,11 @@ class CoreContainer(containers.DeclarativeContainer):
 
     database = providers.Singleton(
         Database,
-        database_user=config.database.user,
-        database_password=config.database.password,
-        database_host=config.database.host,
-        database_port=config.database.port,
-        database_name=config.database.name,
+        database_user=config.mssql_user,
+        database_password=config.mssql_pass,
+        database_host=config.mssql_host,
+        database_port=config.mssql_port,
+        database_name=config.mssql_db,
     )
 
-    redis_client = RedisClient.get_instance()
+    redis_client = providers.Resource(provide_redis_client)

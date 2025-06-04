@@ -11,7 +11,7 @@ def create_dsn(
     database_port: int,
     database_name: str,
 ):
-    return f"mssql+pyodbc://{database_user}:{database_password}@{database_host}:{database_port}/{database_name}?driver=ODBC+Driver+17+for+SQL+Server"
+    return f"mssql+aioodbc://{database_user}:{database_password}@{database_host}:{database_port}/{database_name}?driver=ODBC+Driver+17+for+SQL+Server"
 
 
 class Base(DeclarativeBase):

@@ -4,6 +4,7 @@ from app.di.container import Container
 
 from fastapi.middleware.cors import CORSMiddleware
 from core.infrastructure.middleware.logging import AccessLoggingMiddleware
+from core.setting.settings import Settings
 
 from router.keyword_router import router as keyword_router
 
@@ -21,10 +22,16 @@ def register_middleware(app: FastAPI) -> None:
 def register_router(app: FastAPI) -> None:
     app.include_router(keyword_router)
 
+async def lifespan(app: FastAPI):
+    await container.init_resources()
+    yield
+    await container.shutdown_resources()
+
 def create_container():
     container = Container()
     container.wire(packages=["router"])
-    container.config.from_yaml("./config.yml")
+    setting = Settings()
+    container.config.from_pydantic(setting)
 
     return container
 
@@ -32,8 +39,10 @@ def create_app():
     global container
     container = create_container()
 
-    app = FastAPI(docs_url="/docs")
+    app = FastAPI(docs_url="/docs", lifespan=lifespan)
     register_middleware(app)
     register_router(app)
+
+    return app
 
 app = create_app()

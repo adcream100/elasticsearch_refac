@@ -2,7 +2,7 @@ from contextlib import AbstractAsyncContextManager
 from typing import Callable
 
 from sqlalchemy import select, and_, func
-from models.model import PopularSearches
+from core.models.model import PopularSearches
 from sqlalchemy.ext.asyncio import AsyncSession
 
 SessionFactory = Callable[..., AbstractAsyncContextManager[AsyncSession]]

@@ -17,7 +17,6 @@ class Container(CoreContainer):
         client=CoreContainer.redis_client
     )
 
-
     # ------------------------------------------
 
     keyword_service = providers.Factory(
