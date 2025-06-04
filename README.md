@@ -2,6 +2,7 @@
 
 기본 구조는 아래와 같습니다.
 
+```
 /
 app/
   di/container.py
@@ -39,6 +40,8 @@ router/
   domain1.py
   domain2.py
 run_server.py
+```
+
 
 초기엔 다소 복잡하고 어렵게 느껴지실 수 있습니다.
 하지만 예제 코드를 보면 이해가 간단해집니다.
